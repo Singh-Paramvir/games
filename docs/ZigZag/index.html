@@ -61,8 +61,8 @@
         updateBannerVisibility();
       }
 
-     var buildUrl = "Build";
-var loaderUrl = buildUrl + "/ZigZagWebgl.loader.js"; // rename to avoid space
+    var buildUrl = "ZigZag/Build";
+var loaderUrl = buildUrl + "/ZigZagWebgl.loader.js";
 var config = {
   dataUrl: buildUrl + "/ZigZagWebgl.data.unityweb",
   frameworkUrl: buildUrl + "/ZigZagWebgl.framework.js.unityweb",
@@ -73,6 +73,7 @@ var config = {
   productVersion: "0.1",
   showBanner: unityShowBanner,
 };
+
 
       // By default, Unity keeps WebGL canvas render target size matched with
       // the DOM size of the canvas element (scaled by window.devicePixelRatio)
