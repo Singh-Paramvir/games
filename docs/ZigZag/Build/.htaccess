@@ -7,13 +7,18 @@
   AddType application/wasm .wasm.unityweb
   AddType application/javascript .js.unityweb
 
-  # --- Gzip compressed builds (if Unity used gzip) ---
-  # AddEncoding gzip .unityweb
-  # AddType application/octet-stream .data.unityweb
-  # AddType application/wasm .wasm.unityweb
-  # AddType application/javascript .js.unityweb
+  # --- Gzip compressed builds (.unityweb) ---
+  AddEncoding gzip .gz
+  AddType application/octet-stream .data.gz
+  AddType application/wasm .wasm.gz
+  AddType application/javascript .js.gz
 
-  # --- For uncompressed builds ---
+  # --- For plain (uncompressed) builds ---
   AddType application/wasm .wasm
 
+</IfModule>
+
+# Allow CORS (sometimes Unity fails if no CORS header)
+<IfModule mod_headers.c>
+  Header set Access-Control-Allow-Origin "*"
 </IfModule>
