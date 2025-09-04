@@ -61,18 +61,18 @@
         updateBannerVisibility();
       }
 
-      var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/Zig Zag Webgl.loader.js";
-      var config = {
-        dataUrl: "https://tbd.blr1.cdn.digitaloceanspaces.com/games/ZigZag/Build/Zig%20Zag%20Webgl.data.unityweb",
-        frameworkUrl: buildUrl + "/Zig Zag Webgl.framework.js.unityweb",
-        codeUrl:"https://tbd.blr1.cdn.digitaloceanspaces.com/games/ZigZag/Build/Zig%20Zag%20Webgl.wasm.unityweb",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "ZigZag",
-        productVersion: "0.1",
-        showBanner: unityShowBanner,
-      };
+     var buildUrl = "Build";
+var loaderUrl = buildUrl + "/ZigZagWebgl.loader.js"; // rename to avoid space
+var config = {
+  dataUrl: buildUrl + "/ZigZagWebgl.data.unityweb",
+  frameworkUrl: buildUrl + "/ZigZagWebgl.framework.js.unityweb",
+  codeUrl: buildUrl + "/ZigZagWebgl.wasm.unityweb",
+  streamingAssetsUrl: "StreamingAssets",
+  companyName: "DefaultCompany",
+  productName: "ZigZag",
+  productVersion: "0.1",
+  showBanner: unityShowBanner,
+};
 
       // By default, Unity keeps WebGL canvas render target size matched with
       // the DOM size of the canvas element (scaled by window.devicePixelRatio)
