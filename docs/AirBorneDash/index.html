@@ -231,6 +231,16 @@ let orientationCheckInterval;
         window.addEventListener("load", checkOrientation);
 
 
+      function sendDataToReactNative(jsonData) {
+            if (window.ReactNativeWebView) {
+                // Send the data to the React Native app
+                window.ReactNativeWebView.postMessage(jsonData);
+                console.log("Data sent to React Native:", jsonData);
+            } else {
+                // For testing in a normal browser
+                console.log("Not in a React Native WebView. Data:", jsonData);
+            }
+        }
     </script>
   </body>
 </html>
