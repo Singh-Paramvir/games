@@ -255,86 +255,16 @@ let orientationCheckInterval;
     console.log("[Unity->RN] score sent:", payload);
   }
 
-         function sendDataToReactNative(jsonData) {
-    try {
-      if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
-        window.ReactNativeWebView.postMessage(jsonData);
-        console.log("[Unity->RN] sent via WebView:", jsonData);
-      } else {
-        // fallback for normal browser (testing purpose)
-        console.log("[Unity->RN] not in RN, data:", jsonData);
-      }
-    } catch (e) {
-      console.error("sendDataToReactNative error:", e, "data:", jsonData);
-    }
+      // Unity jab game khatam ho ya level complete ho tab ye call kare:
+window.unitySendScore = function(score) {
+  try {
+    sendScoreToRN(score); // ab sirf yahan call hoga
+    console.log("[Unity->RN] score sent (game over):", score);
+  } catch (e) {
+    console.error("unitySendScore error:", e);
   }
-        (function fallbackScoreDetector() {
-    // list of candidate global variable names frequently used in builds
-    const nameCandidates = [
-      "score", "currentScore", "playerScore", "points", "totalScore",
-      "Score", "CurrentScore", "gameScore", "game_points"
-    ];
+};
 
-    // map to track last values detected
-    const lastValues = {};
-
-    // helper to check a value is integer-like and sensible
-    function isValidScoreCandidate(v) {
-      return (typeof v === "number" || (!isNaN(Number(v)) && v !== "")) &&
-             isFinite(v) && Math.abs(Number(v)) < 1e9;
-    }
-
-    // scan for ANY global numeric field that looks like a score
-    function scanGlobals() {
-      try {
-        // first check named candidates
-        for (let name of nameCandidates) {
-          if (window.hasOwnProperty(name)) {
-            const v = window[name];
-            if (isValidScoreCandidate(v)) {
-              if (lastValues[name] === undefined || Number(v) !== Number(lastValues[name])) {
-                lastValues[name] = Number(v);
-                sendScoreToRN(v);
-                return; // send on first plausible hit (reduce noise)
-              }
-            }
-          }
-        }
-
-        // fallback: inspect other top-level numeric globals added by build
-        for (let k in window) {
-          if (!window.hasOwnProperty(k)) continue;
-          if (k.length > 30) continue; // skip very long keys
-          // ignore DOM, known things
-          if (["location","document","navigator","console","localStorage","sessionStorage"].includes(k)) continue;
-          const v = window[k];
-          if (isValidScoreCandidate(v)) {
-            // heuristics: score usually small int and increases over time
-            const prev = lastValues[k] === undefined ? null : lastValues[k];
-            if (prev === null || Number(v) !== Number(prev)) {
-              lastValues[k] = Number(v);
-              // only send if it looks like a score change (integer and non-negative)
-              if (Number.isInteger(Number(v)) && Number(v) >= 0 && Number(v) < 1e7) {
-                sendScoreToRN(v);
-                return;
-              }
-            }
-          }
-        }
-      } catch (e) {
-        console.warn("fallbackScoreDetector error:", e);
-      }
-    }
-
-    // Run scan frequently while game is active.
-    let detectorInterval = setInterval(scanGlobals, 250);
-
-    // Stop scanning after some time to reduce overhead (you can increase if needed)
-    setTimeout(() => {
-      clearInterval(detectorInterval);
-      console.log("fallbackScoreDetector: stopped scanning after timeout");
-    }, 5 * 60 * 1000); // 5 minutes
-  })();
 
   // ---------- 3) Optional: expose a JS function Unity could call if you later can edit C# ----------
   // In case you later get C# source or find a place to call JS, this is the callable function:
