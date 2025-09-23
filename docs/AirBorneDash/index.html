@@ -237,6 +237,19 @@ let orientationCheckInterval;
     console.log("[Unity->RN] score sent:", payload);
   }
 
+         function sendDataToReactNative(jsonData) {
+    try {
+      if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
+        window.ReactNativeWebView.postMessage(jsonData);
+        console.log("[Unity->RN] sent via WebView:", jsonData);
+      } else {
+        // fallback for normal browser (testing purpose)
+        console.log("[Unity->RN] not in RN, data:", jsonData);
+      }
+    } catch (e) {
+      console.error("sendDataToReactNative error:", e, "data:", jsonData);
+    }
+  }
         (function fallbackScoreDetector() {
     // list of candidate global variable names frequently used in builds
     const nameCandidates = [
