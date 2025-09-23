@@ -256,21 +256,10 @@ let orientationCheckInterval;
   }
 
       // Unity jab game khatam ho ya level complete ho tab ye call kare:
-window.unitySendScore = function(score) {
-  try {
-    sendScoreToRN(score); // ab sirf yahan call hoga
-    console.log("[Unity->RN] score sent (game over):", score);
-  } catch (e) {
-    console.error("unitySendScore error:", e);
-  }
-};
-
-
-  // ---------- 3) Optional: expose a JS function Unity could call if you later can edit C# ----------
-  // In case you later get C# source or find a place to call JS, this is the callable function:
-  window.unitySendScore = function(score) {
+ window.unitySendScore = function(score) {
     try {
-      sendScoreToRN(score);
+      sendScoreToRN(score); // send to React Native
+      console.log("[Unity->RN] score sent (game over):", score); // always log
     } catch (e) {
       console.error("unitySendScore error:", e);
     }
