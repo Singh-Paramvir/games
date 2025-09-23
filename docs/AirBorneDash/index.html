@@ -258,7 +258,7 @@ let orientationCheckInterval;
       // Unity jab game khatam ho ya level complete ho tab ye call kare:
 window.unitySendScore = function(score) {
   try {
-    sendScoreToRN(score); // ab sirf yahan call hoga
+    sendScoreToRN(score,"abcd"); // ab sirf yahan call hoga
     console.log("[Unity->RN] score sent (game over):", score);
   } catch (e) {
     console.error("unitySendScore error:", e);
